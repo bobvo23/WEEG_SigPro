@@ -71,7 +71,25 @@ Sample data for this tool can be found in ./data/test alpha 5s/
 (comming soon...)
 
 ## SSVEP-based BCI application
-(comming soon...)
+First, install [PyGame](http://www.pygame.org/download.shtml) (version 1.9.1)
+
+Run
+    > ./tools/SSVEP_BCIGame/FindPricess.py
+
+The application is ready when console displays the message:
+    > Waiting for connection...
+
+Click "Connect" button within the TCP-IP panel of MATLAB's GUI to start playing game.
+
+or
+Run
+    > ./tools/SSVEP_BCIGame/client_simulation.py
+
+to simulate the game.
+
+<div style="text-align:center"><img src="images/FindPrincess_GUI.png" /></div>
+
+Check out this [video](https://youtu.be/-I-zIth_pqQ) to see how to connect 2 applications via TCP-IP and the [demo](https://www.youtube.com/watch?v=unTn2dZdzRU&feature=youtu.be) of playing puzzple game using WEEG (start from 2:10).
 
 
 ## Reference

@@ -22,7 +22,7 @@ function varargout = WEEG_SigPro(varargin)
 
 % Edit the above text to modify the response to help WEEG_SigPro
 
-% Last Modified by GUIDE v2.5 31-Jan-2017 07:29:35
+% Last Modified by GUIDE v2.5 17-Feb-2017 16:18:18
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -1407,6 +1407,87 @@ function editFIRorder_Callback(hObject, eventdata, handles)
 % --- Executes during object creation, after setting all properties.
 function editFIRorder_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to editFIRorder (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on button press in button_connectTCP.
+function button_connectTCP_Callback(hObject, eventdata, handles)
+% hObject    handle to button_connectTCP (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+ipAddress = get(handles.edit_ipAddress, 'String');
+ipPort = str2double(get(handles.edit_ipPort, 'String'));
+
+% Open serial port   
+try
+    % Init tcpip object
+    handles.tcpipClient = tcpip(ipAddress, ipPort, 'NetworkRole', 'Client');
+    set(handles.tcpipClient,'InputBufferSize',7688);
+    set(handles.tcpipClient,'Timeout',5);
+    
+    % Connect
+    fopen(handles.tcpipClient);      
+%    drawnow;
+catch e
+    % Close port first
+    if(strcmp(handles.tcpipClient.status,'open')==1)
+        fclose(handles.tcpipClient);
+    end
+    errordlg(e.message);
+end
+
+% GIve user a sign
+set(handles.text_connectTCP, 'String', 'Connected!');
+set(handles.text_connectTCP, 'BackgroundColor', [1 1 0.2]);
+   
+% Update handles structure
+guidata(hObject, handles);
+
+
+
+function edit_ipAddress_Callback(hObject, eventdata, handles)
+% hObject    handle to edit_ipAddress (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit_ipAddress as text
+%        str2double(get(hObject,'String')) returns contents of edit_ipAddress as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function edit_ipAddress_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit_ipAddress (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function edit_ipPort_Callback(hObject, eventdata, handles)
+% hObject    handle to edit_ipPort (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit_ipPort as text
+%        str2double(get(hObject,'String')) returns contents of edit_ipPort as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function edit_ipPort_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit_ipPort (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
